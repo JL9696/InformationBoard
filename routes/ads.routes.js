@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const AdController = require('../contollers/Ads.controller');
+const AdController = require('../controllers/ads.controller');
 
 router.get('/ads', AdController.getAll);
 router.get('/ads/:id', AdController.getById);
