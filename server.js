@@ -1,43 +1,47 @@
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose');
-// const uuid = require('uuid');
-const router = express.Router()
 const path = require('path');
-const socket = require('socket.io');
+const connectToDB = require('./db');
 const helmet = require('helmet');
-
-const adsRoutes = require('./routes/ads.routes');
-const authRoutes = require('./routes/auth.routes');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const mongoose = require('mongoose');
 
 const app = express();
+app.listen(process.env.PORT || 8000, () => {
+  console.log('Server is running on port: 8000');
+});
+
+connectToDB();
 
 app.use(helmet());
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-app.use(cors());
+if(process.env.NODE_ENV !== 'production') {
+  app.use(
+    cors({
+      origin: ['http://localhost:3000'],
+      credentials: true,
+    })
+  );
+} else {
+  app.use(cors());
+}
 
-app.use('/api', adsRoutes);
-app.use('/api/auth', authRoutes);
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use(session({ secret: process.env.SECRET, store: MongoStore.create(mongoose.connection), resave: false, saveUninitialized: false, cookie: {
+  secure: process.env.NODE_ENV == 'production',
+} }));
+
+app.use(express.static(path.join(__dirname, '/client/build')));
+
+app.use('/api', require('./routes/ads.routes')); 
+app.use('/api/auth', require('./routes/auth.routes'));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/client/build/index.html'));
+});
 
 app.use((req, res) => {
   res.status(400).send('Not found..');
-});
-
-const NODE_ENV = process.env.NODE_ENV;
-let dbUri = '';
-
-if(NODE_ENV === 'production') dbUri = process.env.DB_URL;
-else dbUri = 'mongodb://localhost:27017/InformationBoard';
-
-mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
-const db = mongoose.connection;
-
-db.once('open', () => {
-  console.log('Connected to the database');
-});
-db.on('error', err => console.log('Error ' + err));
-
-const server = app.listen(process.env.PORT || 8000, () => {
-  console.log('Server is running on port: 8000');
 });
