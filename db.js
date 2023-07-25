@@ -7,7 +7,7 @@ const connectToDB = () => {
 
   if (NODE_ENV === 'production') 
   dbUri = process.env.DB_URL;
-  else dbUri = 'mongodb://localhost:27017/InformationBoard';
+  else dbUri = 'mongodb://127.0.0.1:27017/InformationBoard';
 
   mongoose.connect(dbUri, {
     useNewUrlParser: true,
