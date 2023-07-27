@@ -1,0 +1,11 @@
+@import '../../../styles/settings.scss';
+
+.button{
+  height: 35px;
+  background-color: $blue;
+  color: $color-background;
+  font-size: 15px;
+  &:hover{
+    background-color: $blue-hover;
+  }
+}

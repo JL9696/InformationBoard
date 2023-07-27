@@ -1,0 +1,34 @@
+@import '../../../styles/settings.scss';
+
+.navbar{
+  display: flex;
+  height: 70px;
+  background-color: $color-info; 
+  padding: 0 50px;
+  justify-content: space-between;
+}
+
+.navTitle{
+  display: inline;
+  align-items: center;
+  color: $color-background;
+}
+
+.navItem{
+  justify-content: right;
+  ul{
+    list-style-type:none;
+
+    li{
+      float:left;
+      font-size: 20px;
+      color: $color-background;
+      padding: 15px;
+    }
+
+    li:hover{
+      font-size: 22px;
+      color: $grey;
+    }
+  }
+}
