@@ -1,15 +1,10 @@
-import React from 'react';
-import Navbar from '../../layout/Navbar/Navbar';
-import Footer from '../../layout/Footer/Footer';
-import SearchForm from '../../features/SearchForm/SearchForm';
+import styles from './Home.module.scss';
 
 const Home = () => {
-  return(
-    <>
-      <Navbar />
-      <SearchForm />
-      <Footer />
-    </>     
+  return (
+      <div className={styles.home}>
+        <h1>Home</h1>
+      </div>
   );
 };
 
