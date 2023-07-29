@@ -30,7 +30,7 @@ const Register = () => {
         };
 
         setStatus('loading')
-        fetch(`${API_URL}/auth/register`, options)
+        fetch(`${API_URL}auth/register`, options)
             .then(res => {
                 if (res.status === 201) {
                     setStatus('success')
@@ -72,7 +72,6 @@ const Register = () => {
                     <p>You have to fill all the fields.</p>
                 </Alert>
             )}
-
 
             {status === "loginError" && (
                 <Alert variant="warning">

@@ -1,10 +1,11 @@
 const Ad = require('../models/Ad.model');
 const fs = require('fs');
 const getImageFileType = require('../utils/getImageFileType');
+const user = require('../models/User.model');
 
 exports.getAll = async (req, res) => {
   try {
-    res.json(await Ad.find());
+    res.json(await Ad.find().populate('user'));
   }
   catch(err){
     res.status(500).json({ message: err });
@@ -13,7 +14,7 @@ exports.getAll = async (req, res) => {
 
 exports.getById = async (req, res) => {
   try {
-    const advert = await Ad.findById(req.params.id);
+    const advert = await Ad.findById(req.params.id).populate('user');
     if(!advert) res.status(404).json({ message: 'Not found...'});
     else res.json(advert);
   }
@@ -24,10 +25,10 @@ exports.getById = async (req, res) => {
 
 exports.addAd = async (req, res) => {
   try {
-    const { title, description, image, price, locaction, user } = req.body;
+    const { title, description, price, locaction} = req.body;
     const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
-    if(title && content && price &&  location && req.file && ['image/png', 'image/jpeg', 'image/gif'].includes(fileType)){
-      const newAdvert = new Ad({ title: title, description: description, pubdate: new Date(), image: req.file.filename, price: price, locaction: locaction, user: req.session.login._id });
+    if(title && description && price &&  location && req.file && ['image/png', 'image/jpeg', 'image/gif'].includes(fileType)){
+      const newAdvert = new Ads({ title: title, description: description, pubDate: new Date(), image: req.file.filename, price: price, locaction: locaction, user: req.session.login._id });
       await newAdvert.save();
       res.json({ message: 'Ok' });
     }else {
@@ -47,7 +48,7 @@ exports.deleteAd = async (req, res) => {
     const advert = await Ad.findById(req.params.id);
     if(advert) {
       await Ad.deleteOne({ _id: req.params.id });
-      res.json({ message: 'Ok' });
+      res.json({ message: 'Deleted' });
     }
     else res.status(404).json({ message: 'Not found...' });
   }
