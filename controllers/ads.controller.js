@@ -25,20 +25,23 @@ exports.getById = async (req, res) => {
 
 exports.addAd = async (req, res) => {
   try {
-    const { title, description, price, locaction} = req.body;
+    console.log(req.session);
+    const { title, description, pubDate, price, location} = req.body;
     const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
-    if(title && description && price &&  location && req.file && ['image/png', 'image/jpeg', 'image/gif'].includes(fileType)){
-      const newAdvert = new Ads({ title: title, description: description, pubDate: new Date(), image: req.file.filename, price: price, locaction: locaction, user: req.session.login._id });
+    if(title && description && price && location && pubDate && req.file && ['image/png', 'image/jpeg', 'image/gif'].includes(fileType)){
+      const newAdvert = new Ads({ title: title, description: description, pubDate: pubDate, image: req.file.filename, price: price, location: location, user: req.session.user.id });
       await newAdvert.save();
-      res.json({ message: 'Ok' });
+      console.log('abc');
+      res.status(201).json({ message: 'Ok' });
     }else {
       if (req.file) {
-        fs.unlinkSync(`./client/public/uploads/${req.file.filename}`);
+        fs.unlinkSync(`./public/uploads/${req.file.filename}`);
       }
       res.status(400).send({ message: 'Bad request' });
     }
   } 
   catch(err){
+    console.log(err);
     res.status(500).json({ message: err });
   }
 };
@@ -58,7 +61,7 @@ exports.deleteAd = async (req, res) => {
 };
 
 exports.uppdateAd = async (req, res) => {
-  const { title, description, pubDate, price, locaction } = req.body;
+  const { title, description, pubDate, price, location } = req.body;
   try {
     const advert = await Ad.findById(req.params.id);
     const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
@@ -67,7 +70,7 @@ exports.uppdateAd = async (req, res) => {
       advert.description = description;
       advert.pubDate = pubDate;
       advert.price = price;
-      advert.locaction = locaction;
+      advert.location = location;
       if(req.file && ['image/png', 'image/jpeg', 'image/gif'].includes(fileType)) {
         advert.image = req.file.filename;
       }
@@ -76,14 +79,14 @@ exports.uppdateAd = async (req, res) => {
     }
     else {
       if(req.file){
-        fs.unlinkSync(`./client/public/uploads/${req.file.filename}`)
+        fs.unlinkSync(`./public/uploads/${req.file.filename}`)
       }
       res.status(404).json({ message: 'Not found...' });
     }
   }
   catch(err){
     if(req.file){
-      fs.unlinkSync(`./client/public/uploads/${req.file.filename}`)
+      fs.unlinkSync(`./public/uploads/${req.file.filename}`)
     }
     res.status(500).json({ message: err });
   }

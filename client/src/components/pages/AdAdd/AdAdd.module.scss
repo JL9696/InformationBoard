@@ -1,0 +1,25 @@
+@import '../../../styles/settings.scss';
+
+.adsForm {
+    position: relative;
+    padding: 10px;
+    margin: 15px 30%;
+}
+
+.dform {
+    display: block;
+    align-items: center;
+    position: relative;
+}
+
+label {
+    display: block;
+}
+
+textarea {
+    display: block;
+}
+
+button.button.btn.btn-primary {
+    margin: 10px 0;
+}

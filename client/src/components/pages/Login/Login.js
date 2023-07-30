@@ -24,11 +24,12 @@ const Login = () => {
             headers: {
                 'Content-Type': 'application/json'
             },
+            credentials: 'include',
             body: JSON.stringify({ login, password })
         };
 
         setStatus('loading');
-        fetch(`${API_URL}/auth/login`, options)
+        fetch(`${API_URL}/api/auth/login`, options)
             .then(res => {
                 if (res.status === 200) {
                     setStatus('success');
