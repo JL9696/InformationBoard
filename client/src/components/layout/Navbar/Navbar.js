@@ -1,22 +1,47 @@
 import styles from './Navbar.module.scss';
+import { Navbar, NavbarBrand, Nav } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
+import { useSelector } from 'react-redux'
+import { getUser } from '../../../redux/usersRedux';
 
-const Navbar = () => {
-  return(
-    <>
-    <div className={styles.navbar}>
-      <div className={styles.navTitle}>
-        <h1>Notice Board</h1>
-      </div>
-      <div className={styles.navItem}>
-        <ul>
-          <li>Home</li>
-          <li>Sign in </li>
-          <li>Register</li>
+const NavBar = () => {
+  const user = useSelector(getUser);
+
+  return (
+    <Navbar className={styles.navbar}>
+      <NavbarBrand className='styles.navTitle'>Notice Board</NavbarBrand>
+      <Nav>
+        <ul className={styles.nav_links}>
+          <li>
+            <NavLink className={({ isActive }) => isActive ? styles.linkActive : undefined}
+              to="/"> Home
+            </NavLink>
+          </li>
+          <li>
+            {!user && (
+              <NavLink
+                className={({ isActive }) => isActive ? styles.linkActive : undefined}
+                to="/login"> Sign in
+              </NavLink>
+            )}
+          </li>
+          <li>
+            {!user && (
+              <NavLink className={({ isActive }) => isActive ? styles.linkActive : undefined}
+                to="/register" > Register
+              </NavLink>
+            )}
+          </li>
+          <li>
+            {user && (<NavLink className={({ isActive }) => isActive ? styles.linkActive : undefined}
+              to="/logout"> Logout
+            </NavLink>
+            )}
+          </li>
         </ul>
-      </div>
-    </div>
-    </>
-  )
+      </Nav>
+    </Navbar>
+  );
 }
 
-export default Navbar;
+export default NavBar;

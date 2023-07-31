@@ -32,3 +32,23 @@
     }
   }
 }
+
+.nav_links {
+  justify-content: right;
+  margin: 0;
+  list-style: none;
+  display: inline-flex;
+  padding: 10px;
+  transform: translateX(275%);
+
+  a {
+    justify-content: right;
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+  }
+
+  a.linkActive {
+    color: grey;
+  }
+}
