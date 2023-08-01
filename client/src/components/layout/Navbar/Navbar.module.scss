@@ -11,7 +11,7 @@
 .navTitle{
   display: inline;
   align-items: center;
-  color: $color-background;
+  color: $color-textfield-border;
 }
 
 .navItem{
@@ -39,7 +39,7 @@
   list-style: none;
   display: inline-flex;
   padding: 10px;
-  transform: translateX(275%);
+  transform: translateX(650%);
 
   a {
     justify-content: right;

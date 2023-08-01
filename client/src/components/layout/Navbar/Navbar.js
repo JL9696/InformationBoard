@@ -9,7 +9,7 @@ const NavBar = () => {
 
   return (
     <Navbar className={styles.navbar}>
-      <NavbarBrand className='styles.navTitle'>Notice Board</NavbarBrand>
+      <NavbarBrand className={styles.navTitle}>Notice Board</NavbarBrand>
       <Nav>
         <ul className={styles.nav_links}>
           <li>

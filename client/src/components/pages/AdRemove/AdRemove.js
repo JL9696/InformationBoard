@@ -1,9 +1,7 @@
-const AdRemove = () =>{
-    return (
-        <div>
-            <h1>AdRemove</h1>
-        </div>
-    );
-}
+import React from 'react';
+
+const AdRemove = () => {
+  return <div>AdRemove</div>;
+};
 
 export default AdRemove;

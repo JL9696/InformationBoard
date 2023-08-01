@@ -15,7 +15,7 @@ function CollectionAds() {
   return (
     <div className={styles.collectWrapper}>
       {ads.map((ad) => (
-        <AdBox {...ad}/>  
+        <AdBox key={ad._id} {...ad} />
       ))}
     </div>
   )

@@ -29,6 +29,24 @@ export const fetchAd = () => {
     };
   };
 
+  export const fetchData = () => {
+    return (dispatch) => {
+      fetch(API_URL + '/api/')
+        .then((res) => res.json())
+  
+        .then((ads) => dispatch(updateAds(ads)));
+    };
+  };
+
+  export const fetchAdvertBySearchPhrase = (searchPhrase) => {
+    return (dispatch) => {
+      fetch(API_URL + 'api/ads/search/' + searchPhrase)
+        .then((res) => res.json())
+        .then((ads) => dispatch(updateAds(ads)));
+      dispatch(searchAd(searchPhrase));
+    };
+  };
+
 const adsReducer = (statePart = [], action) => {
   switch (action.type){
     case ADD_AD:
