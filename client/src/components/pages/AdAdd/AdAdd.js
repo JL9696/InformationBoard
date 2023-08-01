@@ -5,6 +5,10 @@ import Form from 'react-bootstrap/Form'
 import { API_URL } from '../../../config';
 import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
+import { useDispatch } from 'react-redux';
+import { useParams, Link, Navigate } from 'react-router-dom';
+import { getAdById, editAd } from '../../../redux/adRedux';
+import { useSelector} from 'react-redux';
 
 const AddAds = () => {
 
@@ -15,6 +19,11 @@ const AddAds = () => {
     const [location, setLocation] = useState('');
     const [image, setImage] = useState(null);
     const [status, setStatus] = useState(null);
+
+    const dispatch = useDispatch();
+    const { adId } = useParams();
+    const { id } = useParams();
+    const ad = useSelector((state) => getAdById(state, id));
 
     const currentUser = localStorage.getItem('loggedInUser');
     console.log(currentUser);
@@ -41,7 +50,7 @@ const AddAds = () => {
                 if (res.status === 201) {
                     setStatus('success');
                     dispatch(editAd({ ...ad, adId }));
-                    navigate('/');
+                    <Navigate to='/' />;
                 } else if (res.status === 400) {
                     setStatus('clientError');
                 } else if (res.status === 409) {

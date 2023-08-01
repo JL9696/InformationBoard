@@ -2,7 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import styles from './Ad.module.scss';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getAdById, updateAds } from '../../../redux/adRedux';
+import { getAdById, updateAds, editAd } from '../../../redux/adRedux';
 import { getUser } from '../../../redux/usersRedux';
 import { getUserId } from '../../../redux/userData';
 import { Link } from 'react-router-dom';
@@ -12,7 +12,7 @@ import ModalDel from '../../features/ModalDel/ModalDel';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-
+import { useDispatch } from 'react-redux';
 
 const Ad = () => {
   const navigate = useNavigate();
@@ -21,8 +21,12 @@ const Ad = () => {
   const id = adId.id;
   const ad = useSelector((state) => getAdById(state, id));
   const userId = useSelector(getUserId);
+  const adData = useSelector((state) => getAdById(state, id));
+
+  const dispatch = useDispatch();
 
   const [showModal, setShowModal] = useState(false);
+  const [status, setStatus] = useState(null);
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
