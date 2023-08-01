@@ -40,12 +40,14 @@ const AddAds = () => {
             .then(res => {
                 if (res.status === 201) {
                     setStatus('success');
+                    dispatch(editAd({ ...ad, adId }));
+                    navigate('/');
                 } else if (res.status === 400) {
                     setStatus('clientError');
                 } else if (res.status === 409) {
                     setStatus('loginError');
                 } else {
-                    setStatus('serverError');
+                    setStatus('serverError'); 
                 }
             })
             .catch(err => {

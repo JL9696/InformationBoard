@@ -42,6 +42,9 @@ exports.addAd = async (req, res) => {
   } 
   catch(err){
     console.log(err);
+    if (req.file) {
+      fs.unlinkSync(`./public/uploads/${req.file.filename}`);
+    }
     res.status(500).json({ message: err });
   }
 };

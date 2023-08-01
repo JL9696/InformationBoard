@@ -31,7 +31,7 @@ export const fetchAd = () => {
 
   export const fetchData = () => {
     return (dispatch) => {
-      fetch(API_URL + '/api/')
+      fetch(API_URL + '/api/ad')
         .then((res) => res.json())
   
         .then((ads) => dispatch(updateAds(ads)));
@@ -43,7 +43,6 @@ export const fetchAd = () => {
       fetch(API_URL + 'api/ads/search/' + searchPhrase)
         .then((res) => res.json())
         .then((ads) => dispatch(updateAds(ads)));
-      dispatch(searchAd(searchPhrase));
     };
   };
 
@@ -57,8 +56,6 @@ const adsReducer = (statePart = [], action) => {
       return [...action.payload];
     case EDIT_AD:
       return statePart.map((ad) => ad.id === action.payload.id ? { ...ad, ...action.payload } : ad);
-    case SEARCH_ADS:
-      return statePart.filter((ad) => ad.title.includes(action.payload));
     default:
       return statePart;
   }

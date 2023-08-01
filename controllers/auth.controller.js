@@ -30,8 +30,8 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
-    const { login, password, telephon } = req.body;
-    if (login && typeof login === 'string' && password && typeof password === 'string' && telephon && typeof telephon === 'string') {
+    const { login, password} = req.body;
+    if (login && typeof login === 'string' && password && typeof password === 'string') {
       const user = await User.findOne({ login });
       if (!user) {
         res.status(400).send('Login or password are incorrect');
@@ -45,6 +45,8 @@ exports.login = async (req, res) => {
           res.status(400).send('Login or password are incorrect');
         }
       }
+    } else{
+      res.status(400).send({ message: 'bad request' });
     }
   } catch (err) {
     res.status(500).send({ message: err });
