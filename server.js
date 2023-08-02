@@ -30,6 +30,7 @@ app.use(session({ secret: 'abc', store: MongoStore.create(mongoose.connection), 
 
 app.use(express.static(path.join(__dirname, '/client/build')));
 app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(path.join(__dirname, '/uploads/')));
 
 app.use('/api', require('./routes/ads.routes')); 
 app.use('/api/auth', require('./routes/auth.routes'));
